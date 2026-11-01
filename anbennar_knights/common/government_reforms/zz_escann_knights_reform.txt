@@ -1,0 +1,36 @@
+escann_knights_reform = {
+	icon = "manchu_warrior"
+	allow_normal_conversion = yes
+
+	potential = {
+		OR = {
+			tag = B60
+			tag = B58
+			tag = B32
+			tag = B33
+		}
+	}
+
+	trigger = {
+		if = {
+			limit = { has_modifier_locking_military_tier = yes }
+			OR = {
+				has_reform = escann_knights_reform
+				has_not_modifier_locking_military_tier = yes
+			}
+		}
+	}
+
+	modifiers = {
+		army_tradition_decay = -0.005
+		movement_speed = 0.1
+	}
+
+	custom_attributes = {
+		eight_banners_buff = yes
+	}
+
+	ai = {
+		factor = 100
+	}
+}
