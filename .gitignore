@@ -1,0 +1,10 @@
+# Windows / editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+*.bak
+*.tmp
+
+# 本地测试产物
+*.log
+error.log
