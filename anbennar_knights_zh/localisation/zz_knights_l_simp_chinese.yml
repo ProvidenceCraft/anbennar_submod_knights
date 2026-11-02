@@ -1,9 +1,0 @@
-l_simp_chinese:
- manchu_banner:0 "骑士"
- manchu_bannerDESCR:0 "骑士团的具装骑兵，向王冠宣誓效忠，恪守东坎诺的骑士传统。"
- han_banner:0 "步行骑士"
- han_bannerDESCR:0 "下马作战的骑士，以盾与剑坚守阵线。"
- BANNER_REGIMENT:0 "骑士团\n$EFFECT$"
- escann_knights_reform:0 "复兴骑士王国"
- escann_knights_reform_desc:0 "王国以古老的骑士团为核心重建。骑士以服役换取土地与特权，而王冠在战时可以征召他们。\n\n可以从东坎诺文化省份征召骑士，首都额外提供十队。"
- mechanic_allow_banners_yes:0 "可以从东坎诺文化省份征召骑士。"
