@@ -1,9 +1,9 @@
-name="Anbennar: Knights of Escann - 中文"
+name="The Knights of Dcanor - 中文"
 version="0.2.1"
 tags={
 	"Translation"
 }
 dependencies={
-	"Anbennar: Knights of Escann"
+	"The Knights of Dcanor"
 }
 supported_version="v1.37.*"

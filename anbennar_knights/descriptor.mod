@@ -1,4 +1,4 @@
-name="Anbennar: Knights of Escann"
+name="The Knights of Dcanor"
 version="0.2.1"
 tags={
 	"Gameplay"
