@@ -40,62 +40,49 @@ if ($b -lt 0) { throw 'reforms brace not found' }
 if ($text.IndexOf('escann_knights_reform') -ge 0) {
     Write-Host 'reform already present, skip'
 } else {
-    $insert = "`n`t`t`t`tescann_knights_reform"
-    $text = $text.Insert($b + 1, $insert)
+    $text = $text.Insert($b + 1, "`n`t`t`t`tescann_knights_reform")
     Write-Host 'inserted escann_knights_reform at tier 1'
 }
 
 Write-Utf8NoBom (Join-Path $mod 'common\governments\00_governments.txt') $text
 
-# --- 2) static modifiers: banner_regiment bonuses + per-dev cap ---
-$srcSt = Join-Path $Anbennar 'common\static_modifiers\00_static_modifiers.txt'
-if (-not (Test-Path $srcSt)) { throw "missing $srcSt" }
-
-$st = [System.IO.File]::ReadAllText($srcSt)
-
-$knightBlock = @"
-banner_regiment = {
-	discipline = 0.05
-	shock_damage = 0.1
-	morale_damage_received = -0.2
-	regiment_manpower_usage = -0.75
-	land_maintenance_modifier = -0.5
-	reinforce_cost_modifier = 0.75
-	reinforce_speed = -0.5
-}
-"@
-
-$st2 = [regex]::Replace($st, '(?s)banner_regiment\s*=\s*\{.*?\r?\n\}', $knightBlock.TrimEnd(), 1)
-if ($st2 -eq $st) { Write-Warning 'banner_regiment block not replaced' } else { Write-Host 'banner_regiment rewritten with knight bonuses' }
-$st = $st2
-$m = [regex]::Match($st, 'local_amount_of_banners\s*=\s*([0-9.]+)')
-if (-not $m.Success) {
-    Write-Warning 'local_amount_of_banners not found, skipped'
-} else {
-    $old = $m.Groups[1].Value
-    $start = $m.Groups[1].Index
-    $st = $st.Remove($start, $old.Length).Insert($start, '0.05')
-    Write-Host "development local_amount_of_banners $old -> 0.05"
-    Write-Utf8NoBom (Join-Path $mod 'common\static_modifiers\00_static_modifiers.txt') $st
-}
-
-
-# --- 3) cultures: mark the five Escann cultures as banner cultures ---
+# --- 2) cultures: province banner flag only (country flag belongs to the shifter culture) ---
 $srcCu = Join-Path $Anbennar 'common\cultures\anb_cultures.txt'
 if (-not (Test-Path $srcCu)) { throw "missing $srcCu" }
 $cu = [System.IO.File]::ReadAllText($srcCu, [System.Text.Encoding]::GetEncoding(1252))
+
 foreach ($k in @('castanorian','castellyrian','marcher','adenner','farrani_half_elf')) {
     $re = [regex]("(?m)^[ \t]*" + [regex]::Escape($k) + "[ \t]*=[ \t]*\{")
     $m = $re.Match($cu)
     if ($m.Success) {
         $at = $m.Index + $m.Length
-        $cu = $cu.Insert($at, "`n`t`tcountry = { has_banners = yes }`n`t`tprovince = { local_has_banners = yes }")
-        Write-Host "banner cultures: $k"
+        $cu = $cu.Insert($at, "`n`t`tprovince = { local_has_banners = yes }")
+        Write-Host "banner province culture: $k"
     } else {
         Write-Warning "culture not found: $k"
     }
 }
+
 Write-Utf8NoBom (Join-Path $mod 'common\cultures\anb_cultures.txt') $cu
+
+# --- 3) countries: give the four realms the Escann knight units ---
+foreach ($name in @('Castanor','Blademarches','Adenica','Farranean')) {
+    $src = Join-Path $Anbennar "common\countries\$name.txt"
+    if (-not (Test-Path $src)) { Write-Warning "missing country: $name"; continue }
+    $c = [System.IO.File]::ReadAllText($src, [System.Text.Encoding]::GetEncoding(1252))
+    if ($c.IndexOf('escann_knight_banner') -ge 0) {
+        Write-Host "$name already has knight units"
+    } else {
+        $idx = $c.IndexOf('historical_units')
+        if ($idx -lt 0) { Write-Warning "$name has no historical_units"; continue }
+        $brace = $c.IndexOf([char]'{', $idx)
+        if ($brace -lt 0) { Write-Warning "$name historical_units brace missing"; continue }
+        $c = $c.Insert($brace + 1, "`n`t`tescann_knight_banner`n`t`tescann_foot_banner")
+        Write-Host "$name units added"
+    }
+    Write-Utf8NoBom (Join-Path $mod "common\countries\$name.txt") $c
+}
+
 # --- 4) localisation files need a UTF-8 BOM ---
 Get-ChildItem (Join-Path $mod 'localisation') -Filter '*.yml' -ErrorAction SilentlyContinue | ForEach-Object {
     $t = [System.IO.File]::ReadAllText($_.FullName)

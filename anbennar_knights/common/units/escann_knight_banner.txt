@@ -1,4 +1,4 @@
-# Knight（骑兵式兵种）— 子 mod 覆盖
+# Escann Knight（骑兵）— 自定义八旗单位，不覆盖原版 manchu_banner
 
 type = cavalry
 unit_type = tech_cannorian

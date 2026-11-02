@@ -1,5 +1,5 @@
 name="The Knights of Dcanor - 中文"
-version="0.2.1"
+version="0.3.0"
 tags={
 	"Translation"
 }

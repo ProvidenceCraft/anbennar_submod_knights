@@ -1,4 +1,4 @@
-# Foot Knight（步兵式兵种）— 子 mod 覆盖
+# Escann Foot Knight（步兵）— 自定义八旗单位，不覆盖原版 han_banner
 
 type = infantry
 unit_type = tech_cannorian

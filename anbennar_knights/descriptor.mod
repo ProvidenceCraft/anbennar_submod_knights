@@ -1,5 +1,5 @@
 name="The Knights of Dcanor"
-version="0.2.1"
+version="0.3.0"
 tags={
 	"Gameplay"
 	"Alternative History"

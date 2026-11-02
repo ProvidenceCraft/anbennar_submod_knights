@@ -739,7 +739,6 @@ escanni = {
 		}
 	}
 	castanorian = {
-		country = { has_banners = yes }
 		province = { local_has_banners = yes }
 		primary = B32 #Castanor
 		dynasty_names = {
@@ -758,7 +757,6 @@ escanni = {
 		}
 	}
 	castellyrian = {
-		country = { has_banners = yes }
 		province = { local_has_banners = yes }
 		primary = B31 #Castellyr
 		
@@ -777,7 +775,6 @@ escanni = {
 		}
 	}
 	marcher = {
-		country = { has_banners = yes }
 		province = { local_has_banners = yes }
 		primary = B33 #Blademarches
 		dynasty_names = {
@@ -793,7 +790,6 @@ escanni = {
 		}
 	}
 	adenner = {
-		country = { has_banners = yes }
 		province = { local_has_banners = yes }	#the western plains dudes
 		primary = B58 #Adenica
 		dynasty_names = {
@@ -830,7 +826,6 @@ escanni = {
 		}
 	}
 	farrani_half_elf = {
-		country = { has_banners = yes }
 		province = { local_has_banners = yes }
 		primary = B60 #Farraneán
 		dynasty_names = {
