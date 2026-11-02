@@ -10,6 +10,12 @@ param(
 $ErrorActionPreference = 'Stop'
 $mod = Join-Path $Repo 'anbennar_knights'
 
+function Write-Utf8NoBom([string]$Path, [string]$Text) {
+    $dir = Split-Path -Parent $Path
+    if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+    [System.IO.File]::WriteAllText($Path, $Text, (New-Object System.Text.UTF8Encoding($false)))
+}
+
 function Write-Utf8Bom([string]$Path, [string]$Text) {
     $dir = Split-Path -Parent $Path
     if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
@@ -34,12 +40,12 @@ if ($b -lt 0) { throw 'reforms brace not found' }
 if ($text.IndexOf('escann_knights_reform') -ge 0) {
     Write-Host 'reform already present, skip'
 } else {
-    $insert = "`r`n`t`t`t`tescann_knights_reform"
+    $insert = "`n`t`t`t`tescann_knights_reform"
     $text = $text.Insert($b + 1, $insert)
     Write-Host 'inserted escann_knights_reform at tier 1'
 }
 
-Write-Utf8Bom (Join-Path $mod 'common\governments\00_governments.txt') $text
+Write-Utf8NoBom (Join-Path $mod 'common\governments\00_governments.txt') $text
 
 # --- 2) static modifiers: banner_regiment bonuses + per-dev cap ---
 $srcSt = Join-Path $Anbennar 'common\static_modifiers\00_static_modifiers.txt'
@@ -70,7 +76,7 @@ if (-not $m.Success) {
     $start = $m.Groups[1].Index
     $st = $st.Remove($start, $old.Length).Insert($start, '0.05')
     Write-Host "development local_amount_of_banners $old -> 0.05"
-    Write-Utf8Bom (Join-Path $mod 'common\static_modifiers\00_static_modifiers.txt') $st
+    Write-Utf8NoBom (Join-Path $mod 'common\static_modifiers\00_static_modifiers.txt') $st
 }
 
 # --- 3) localisation files need a UTF-8 BOM ---

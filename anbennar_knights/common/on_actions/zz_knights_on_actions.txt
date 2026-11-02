@@ -1,0 +1,40 @@
+# 新占领省份：若属于骑士文化且拥有改革，则标记为骑士征召地
+on_province_owner_change = {
+	effect = {
+		if = {
+			limit = {
+				owner = { has_reform = escann_knights_reform }
+				escann_knights_culture = yes
+			}
+			add_province_modifier = {
+				name = escann_knights_location
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { has_province_modifier = escann_knights_location }
+			remove_province_modifier = escann_knights_location
+		}
+	}
+}
+
+# 年度兜底：处理文化转变等漏网情况
+on_yearly_pulse = {
+	effect = {
+		if = {
+			limit = { has_reform = escann_knights_reform }
+			every_owned_province = {
+				limit = {
+					escann_knights_culture = yes
+					NOT = { has_province_modifier = escann_knights_location }
+				}
+				add_province_modifier = {
+					name = escann_knights_location
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+	}
+}

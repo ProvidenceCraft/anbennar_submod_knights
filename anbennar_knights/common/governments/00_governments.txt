@@ -1,4 +1,4 @@
-﻿
+
 monarchy = {
 	reform_levels = {
 		feudalism_vs_autocracy = { #Tier 1

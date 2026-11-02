@@ -1,0 +1,10 @@
+# 东坎诺五文化：adenner / castellyrian / marcher / farrani_half_elf / castanorian
+escann_knights_culture = {
+	OR = {
+		culture = adenner
+		culture = castellyrian
+		culture = marcher
+		culture = farrani_half_elf
+		culture = castanorian
+	}
+}
