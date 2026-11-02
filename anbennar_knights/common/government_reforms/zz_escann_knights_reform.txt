@@ -26,26 +26,18 @@ escann_knights_reform = {
 		movement_speed = 0.1
 	}
 
-	# 解锁骑士征召：只有挂了 escann_knights_location 的省份才计入
-	custom_attributes = {
-		can_recruit_banners_from_primary_culture_provinces = yes
+	# 原版同款开关：允许本改革使用八旗（骑士）机制
+	conditional = {
+		allow = { has_dlc = "Mandate of Heaven" }
+		allow_banners = yes
 	}
 
+	# 首都额外 +10 队（复用原版修正，不新增代码）
 	effect = {
 		hidden_effect = {
-			# 首都额外 +10 队骑士
 			capital_scope = {
 				add_province_modifier = {
-					name = escann_knights_capital
-					duration = -1
-					hidden = yes
-				}
-			}
-			# 东坎诺五文化省份标记为骑士征召地
-			every_owned_province = {
-				limit = { escann_knights_culture = yes }
-				add_province_modifier = {
-					name = escann_knights_location
+					name = allow_banners_capital_modifier
 					duration = -1
 					hidden = yes
 				}
@@ -56,11 +48,7 @@ escann_knights_reform = {
 	removed_effect = {
 		hidden_effect = {
 			capital_scope = {
-				remove_province_modifier = escann_knights_capital
-			}
-			every_owned_province = {
-				limit = { has_province_modifier = escann_knights_location }
-				remove_province_modifier = escann_knights_location
+				remove_province_modifier = allow_banners_capital_modifier
 			}
 		}
 	}

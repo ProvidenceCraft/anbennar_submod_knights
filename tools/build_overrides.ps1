@@ -79,7 +79,24 @@ if (-not $m.Success) {
     Write-Utf8NoBom (Join-Path $mod 'common\static_modifiers\00_static_modifiers.txt') $st
 }
 
-# --- 3) localisation files need a UTF-8 BOM ---
+
+# --- 3) cultures: mark the five Escann cultures as banner cultures ---
+$srcCu = Join-Path $Anbennar 'common\cultures\anb_cultures.txt'
+if (-not (Test-Path $srcCu)) { throw "missing $srcCu" }
+$cu = [System.IO.File]::ReadAllText($srcCu, [System.Text.Encoding]::GetEncoding(1252))
+foreach ($k in @('castanorian','castellyrian','marcher','adenner','farrani_half_elf')) {
+    $re = [regex]("(?m)^[ \t]*" + [regex]::Escape($k) + "[ \t]*=[ \t]*\{")
+    $m = $re.Match($cu)
+    if ($m.Success) {
+        $at = $m.Index + $m.Length
+        $cu = $cu.Insert($at, "`n`t`tcountry = { has_banners = yes }`n`t`tprovince = { local_has_banners = yes }")
+        Write-Host "banner cultures: $k"
+    } else {
+        Write-Warning "culture not found: $k"
+    }
+}
+Write-Utf8NoBom (Join-Path $mod 'common\cultures\anb_cultures.txt') $cu
+# --- 4) localisation files need a UTF-8 BOM ---
 Get-ChildItem (Join-Path $mod 'localisation') -Filter '*.yml' -ErrorAction SilentlyContinue | ForEach-Object {
     $t = [System.IO.File]::ReadAllText($_.FullName)
     Write-Utf8Bom $_.FullName $t

@@ -1,5 +1,5 @@
 name="Anbennar: Knights of Escann - 中文"
-version="0.2.0"
+version="0.2.1"
 tags={
 	"Translation"
 }
