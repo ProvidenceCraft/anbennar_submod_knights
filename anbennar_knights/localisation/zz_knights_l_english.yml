@@ -6,3 +6,4 @@
  BANNER_REGIMENT:0 "Knight Regiment\n$EFFECT$"
  escann_knights_reform:0 "Restored Knight Kingdom"
  escann_knights_reform_desc:0 "The realm is rebuilt around the old chivalric orders. Knights are granted land and privilege in exchange for service, and the crown may call upon them in times of war.\n\nKnights may be raised from provinces of Escanni culture, with the capital providing an additional ten regiments."
+ mechanic_allow_banners_yes:0 "Can raise Knights from provinces of Escanni culture."
